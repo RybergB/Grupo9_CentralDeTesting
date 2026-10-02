@@ -1,5 +1,7 @@
 # Created by pytest automatically.
 .pytest_cache/
+.venv/
+.edge-profiles/
 screenshots/
 resultados.txt
 *.png
