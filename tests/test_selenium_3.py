@@ -122,27 +122,52 @@ def test_registro_exitoso_muestra_mensaje_requerido(driver, sgso_credentials):
 def test_campos_obligatorios_se_marcan_y_muestran_obligatorio(driver, sgso_credentials):
     iniciar_sesion(driver, sgso_credentials)
     dialogo = abrir_registro(driver)
-
-    # Se completa el formulario y se deja vacío un único campo obligatorio.
-    # Edge muestra su aviso de validación como una burbuja nativa, fuera del DOM.
-    completar_obra(driver, "Nombre temporal")
-    campo_nombre = driver.find_element(By.ID, "nombre")
-    campo_nombre.clear()
     registrar(driver)
 
-    assert dialogo.is_displayed(), "El formulario no debe cerrarse si falta un campo obligatorio"
-    es_valido = driver.execute_script(
-        "return arguments[0].validity.valid;", campo_nombre
+    assert dialogo.is_displayed(), (
+        "El formulario no debe cerrarse si faltan campos obligatorios"
     )
-    assert not es_valido, "El campo Nombre debería quedar inválido cuando está vacío"
 
-    mensaje = campo_nombre.get_property("validationMessage").strip()
-    assert mensaje, (
-        "Edge no mostró el aviso nativo que indica que debe ingresarse el campo obligatorio"
+    # Edge muestra una sola burbuja nativa: la correspondiente al primer
+    # campo inválido. Esa burbuja no forma parte del DOM, por lo que Selenium
+    # debe leer validationMessage del elemento que recibió el foco.
+    campo_enfocado = driver.switch_to.active_element
+    mensaje_nativo = driver.execute_script(
+        "return arguments[0].validationMessage || '';", campo_enfocado
+    ).strip()
+
+    mensajes_inline = [
+        elemento
+        for elemento in dialogo.find_elements(
+            By.XPATH,
+            ".//*[normalize-space()='Obligatorio' "
+            "or normalize-space()='Campo Obligatorio']",
+        )
+        if elemento.is_displayed()
+    ]
+    cantidad_mensajes = len(mensajes_inline) + (1 if mensaje_nativo else 0)
+
+    campos_marcados = dialogo.find_elements(
+        By.CSS_SELECTOR,
+        "[aria-invalid='true'], .border-destructive, .border-red-500",
     )
-    assert driver.switch_to.active_element == campo_nombre, (
-        "Edge debería enfocar el campo obligatorio que impidió enviar el formulario"
-    )
+    campos_marcados_visibles = [
+        elemento for elemento in campos_marcados if elemento.is_displayed()
+    ]
+
+    errores = []
+    if cantidad_mensajes != 6:
+        errores.append(
+            "deben mostrarse seis mensajes de campo obligatorio, "
+            f"pero se encontraron {cantidad_mensajes}"
+        )
+    if len(campos_marcados_visibles) < 6:
+        errores.append(
+            "los seis campos deben quedar marcados visualmente en rojo, "
+            f"pero se encontraron {len(campos_marcados_visibles)}"
+        )
+
+    assert not errores, "; ".join(errores)
 
 
 def test_cancelar_solicita_confirmacion(driver, sgso_credentials):
