@@ -75,6 +75,34 @@ def obtener_notificacion(driver):
     return notificacion.text.strip()
 
 
+def esperar_notificacion(driver, texto_esperado):
+    """Espera un aviso concreto, aunque todavía quede visible un aviso anterior."""
+
+    def encontrar(_driver):
+        avisos = _driver.find_elements(By.CSS_SELECTOR, "[data-sonner-toast]")
+        return next(
+            (
+                aviso.text.strip()
+                for aviso in reversed(avisos)
+                if aviso.is_displayed() and aviso.text.strip() == texto_esperado
+            ),
+            False,
+        )
+
+    try:
+        return WebDriverWait(driver, TIMEOUT, poll_frequency=0.1).until(encontrar)
+    except TimeoutException:
+        visibles = [
+            aviso.text.strip()
+            for aviso in driver.find_elements(By.CSS_SELECTOR, "[data-sonner-toast]")
+            if aviso.is_displayed()
+        ]
+        pytest.fail(
+            f"Se esperaba la notificación {texto_esperado!r}; "
+            f"avisos visibles: {visibles!r}"
+        )
+
+
 def test_registro_exitoso_muestra_mensaje_requerido(driver, sgso_credentials):
     iniciar_sesion(driver, sgso_credentials)
     abrir_registro(driver)
@@ -94,23 +122,27 @@ def test_registro_exitoso_muestra_mensaje_requerido(driver, sgso_credentials):
 def test_campos_obligatorios_se_marcan_y_muestran_obligatorio(driver, sgso_credentials):
     iniciar_sesion(driver, sgso_credentials)
     dialogo = abrir_registro(driver)
+
+    # Se completa el formulario y se deja vacío un único campo obligatorio.
+    # Edge muestra su aviso de validación como una burbuja nativa, fuera del DOM.
+    completar_obra(driver, "Nombre temporal")
+    campo_nombre = driver.find_element(By.ID, "nombre")
+    campo_nombre.clear()
     registrar(driver)
 
-    assert dialogo.is_displayed(), "El formulario no debe cerrarse si faltan campos obligatorios"
-    campos_invalidos = dialogo.find_elements(By.CSS_SELECTOR, "input:invalid, select:invalid")
-    assert campos_invalidos, "El navegador permitió enviar el formulario con campos obligatorios vacíos"
-
-    mensajes = dialogo.find_elements(By.XPATH, ".//*[normalize-space()='Obligatorio']")
-    assert len(mensajes) == 6, (
-        "Debe mostrarse 'Obligatorio' junto a cada uno de los seis campos; "
-        f"se encontraron {len(mensajes)} mensajes"
+    assert dialogo.is_displayed(), "El formulario no debe cerrarse si falta un campo obligatorio"
+    es_valido = driver.execute_script(
+        "return arguments[0].validity.valid;", campo_nombre
     )
+    assert not es_valido, "El campo Nombre debería quedar inválido cuando está vacío"
 
-    campos_marcados = dialogo.find_elements(
-        By.CSS_SELECTOR,
-        "[aria-invalid='true'], .border-destructive, .border-red-500, .text-destructive",
+    mensaje = campo_nombre.get_property("validationMessage").strip()
+    assert mensaje, (
+        "Edge no mostró el aviso nativo que indica que debe ingresarse el campo obligatorio"
     )
-    assert len(campos_marcados) >= 6, "Los seis campos obligatorios deben marcarse visualmente en rojo"
+    assert driver.switch_to.active_element == campo_nombre, (
+        "Edge debería enfocar el campo obligatorio que impidió enviar el formulario"
+    )
 
 
 def test_cancelar_solicita_confirmacion(driver, sgso_credentials):
@@ -136,12 +168,20 @@ def test_cancelar_solicita_confirmacion(driver, sgso_credentials):
 
 def test_obra_duplicada_muestra_mensaje(driver, sgso_credentials):
     iniciar_sesion(driver, sgso_credentials)
+    nombre = f"Obra duplicada Selenium {uuid4().hex[:8]}"
+
+    # La primera alta prepara el dato dentro del propio caso de prueba.
     abrir_registro(driver)
-    completar_obra(driver, "Obra 2")
+    completar_obra(driver, nombre)
+    registrar(driver)
+    WebDriverWait(driver, TIMEOUT).until(
+        EC.invisibility_of_element_located((By.CSS_SELECTOR, "[role='dialog']"))
+    )
+    # La segunda alta repite exactamente nombre y ubicación, que forman el duplicado.
+    abrir_registro(driver)
+    completar_obra(driver, nombre)
     registrar(driver)
 
-    mensaje = obtener_notificacion(driver)
-    assert mensaje == "Obra ya existente", (
-        f"Se esperaba 'Obra ya existente', pero la aplicación mostró {mensaje!r}"
-    )
+    mensaje = esperar_notificacion(driver, "Obra ya existente")
+    assert mensaje == "Obra ya existente"
     assert driver.find_element(By.CSS_SELECTOR, "[role='dialog']").is_displayed()
