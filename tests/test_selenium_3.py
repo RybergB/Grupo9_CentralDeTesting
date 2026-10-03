@@ -20,21 +20,36 @@ def iniciar_sesion(driver, sgso_credentials):
     wait = WebDriverWait(driver, TIMEOUT)
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='email']"))).send_keys(email)
     driver.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys(password)
-    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    driver.evidencia.click(
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']"),
+        "iniciar_sesion",
+    )
     wait.until(EC.visibility_of_element_located((By.XPATH, "//a[contains(@href, '#/proyectos')]")))
 
 
 def abrir_registro(driver):
     wait = WebDriverWait(driver, TIMEOUT)
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '#/proyectos')]"))).click()
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Nuevo Proyecto']"))).click()
+    driver.evidencia.click(
+        wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '#/proyectos')]"))),
+        "abrir_gestion_proyectos",
+    )
+    driver.evidencia.click(
+        wait.until(EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='Nuevo Proyecto']"))),
+        "abrir_nuevo_proyecto",
+    )
     return wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[role='dialog']")))
 
 
 def seleccionar_tipo(driver, tipo="Mantenimiento"):
     wait = WebDriverWait(driver, TIMEOUT)
-    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[role='dialog'] button[role='combobox']"))).click()
-    wait.until(EC.element_to_be_clickable((By.XPATH, f"//*[@role='option' and normalize-space()='{tipo}']"))).click()
+    driver.evidencia.click(
+        wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[role='dialog'] button[role='combobox']"))),
+        "abrir_selector_tipo_obra",
+    )
+    driver.evidencia.click(
+        wait.until(EC.element_to_be_clickable((By.XPATH, f"//*[@role='option' and normalize-space()='{tipo}']"))),
+        f"seleccionar_tipo_{tipo}",
+    )
 
 
 def establecer_fecha(driver, valor):
@@ -62,7 +77,10 @@ def completar_obra(driver, nombre):
 
 
 def registrar(driver):
-    driver.find_element(By.XPATH, "//button[normalize-space()='Registrar Proyecto']").click()
+    driver.evidencia.click(
+        driver.find_element(By.XPATH, "//button[normalize-space()='Registrar Proyecto']"),
+        "registrar_proyecto",
+    )
 
 
 def obtener_notificacion(driver):
@@ -174,12 +192,16 @@ def test_cancelar_solicita_confirmacion(driver, sgso_credentials):
     iniciar_sesion(driver, sgso_credentials)
     abrir_registro(driver)
     driver.find_element(By.ID, "nombre").send_keys("Obra que se cancelará")
-    driver.find_element(By.XPATH, "//button[normalize-space()='Cancelar']").click()
+    driver.evidencia.click(
+        driver.find_element(By.XPATH, "//button[normalize-space()='Cancelar']"),
+        "cancelar_registro_proyecto",
+    )
 
     texto_esperado = "Confirmar cancelación de registro de obra"
     try:
         alerta = WebDriverWait(driver, 3).until(EC.alert_is_present())
         assert alerta.text == texto_esperado
+        driver.evidencia.capturar("descartar_confirmacion_cancelacion")
         alerta.dismiss()
     except TimeoutException:
         confirmaciones = driver.find_elements(By.XPATH, f"//*[normalize-space()='{texto_esperado}']")

@@ -30,21 +30,30 @@ def iniciar_sesion(driver, credenciales):
     wait = WebDriverWait(driver, TIMEOUT)
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='email']"))).send_keys(email)
     driver.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys(password)
-    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    driver.evidencia.click(
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']"),
+        "iniciar_sesion_encargado",
+    )
     wait.until(EC.visibility_of_element_located((By.XPATH, "//a[contains(@href, '#/materiales')]")))
 
 
 def abrir_materiales(driver, obra=OBRA):
     wait = WebDriverWait(driver, TIMEOUT)
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '#/materiales')]"))).click()
+    driver.evidencia.click(
+        wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '#/materiales')]"))),
+        "abrir_ingreso_materiales",
+    )
     wait.until(EC.url_contains("#/materiales"))
     selector = wait.until(
         EC.element_to_be_clickable((By.XPATH, "//button[@role='combobox' and .//*[contains(., 'Elegí una obra')]]"))
     )
-    selector.click()
-    wait.until(
-        EC.element_to_be_clickable((By.XPATH, f"//*[@role='option' and normalize-space()='{obra}']"))
-    ).click()
+    driver.evidencia.click(selector, "abrir_selector_obra")
+    driver.evidencia.click(
+        wait.until(
+            EC.element_to_be_clickable((By.XPATH, f"//*[@role='option' and normalize-space()='{obra}']"))
+        ),
+        f"seleccionar_obra_{obra}",
+    )
     wait.until(EC.visibility_of_element_located((By.XPATH, "//*[normalize-space()='Materiales de la obra']")))
     wait.until(
         lambda navegador: navegador.find_elements(By.CSS_SELECTOR, "input[type='number']")
@@ -84,7 +93,10 @@ def registrar_consumo(driver, cantidad, nombre=MATERIAL):
     campo = tarjeta.find_element(By.CSS_SELECTOR, "input[type='number']")
     campo.clear()
     campo.send_keys(str(cantidad))
-    tarjeta.find_element(By.XPATH, ".//button[normalize-space()='Registrar consumo']").click()
+    driver.evidencia.click(
+        tarjeta.find_element(By.XPATH, ".//button[normalize-space()='Registrar consumo']"),
+        f"registrar_consumo_{nombre}_{cantidad}",
+    )
 
 
 def obtener_notificacion(driver):
@@ -135,7 +147,10 @@ def test_lista_consumos_se_guarda_y_envia_a_planificacion(driver, credenciales_e
     )
     if not botones:
         pytest.fail("No existe una acción para guardar y enviar la lista de materiales a planificación")
-    botones[0].click()
+    driver.evidencia.click(
+        botones[0],
+        "guardar_y_enviar_lista_a_planificacion",
+    )
 
     mensaje = obtener_notificacion(driver)
     assert "planific" in mensaje.lower() or "enviad" in mensaje.lower(), (
@@ -149,7 +164,10 @@ def test_inicio_sesion_fallido_del_encargado(driver, credenciales_encargado):
     wait = WebDriverWait(driver, TIMEOUT)
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='email']"))).send_keys(email)
     driver.find_element(By.CSS_SELECTOR, "input[type='password']").send_keys("contrasena-incorrecta")
-    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    driver.evidencia.click(
+        driver.find_element(By.CSS_SELECTOR, "button[type='submit']"),
+        "intentar_inicio_sesion_invalido",
+    )
 
     error = wait.until(EC.visibility_of_element_located((By.XPATH, "//*[normalize-space()='Credenciales invalidas']")))
     assert error.is_displayed()
@@ -159,7 +177,10 @@ def test_inicio_sesion_fallido_del_encargado(driver, credenciales_encargado):
 def test_encargado_sale_hacia_otro_apartado(driver, credenciales_encargado):
     iniciar_sesion(driver, credenciales_encargado)
     abrir_materiales(driver)
-    driver.find_element(By.XPATH, "//a[contains(@href, '#/proyectos')]").click()
+    driver.evidencia.click(
+        driver.find_element(By.XPATH, "//a[contains(@href, '#/proyectos')]"),
+        "salir_materiales_hacia_proyectos",
+    )
 
     WebDriverWait(driver, TIMEOUT).until(EC.url_contains("#/proyectos"))
     assert driver.find_element(By.XPATH, "//h2[normalize-space()='Gestión de Proyectos']").is_displayed()
@@ -192,7 +213,10 @@ def test_cancelar_descarta_cambios_sin_guardar(driver, credenciales_encargado):
     botones_cancelar = driver.find_elements(By.XPATH, "//button[normalize-space()='Cancelar']")
     if not botones_cancelar:
         pytest.fail("La sección de materiales no ofrece una acción Cancelar para descartar la lista")
-    botones_cancelar[0].click()
+    driver.evidencia.click(
+        botones_cancelar[0],
+        "cancelar_carga_materiales",
+    )
 
     consumido_despues, _, _ = estado_material(driver)
     assert consumido_despues == consumido_antes, "Cancelar modificó el consumo del material"

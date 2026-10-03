@@ -27,9 +27,18 @@ Referencia: [Selenium para Edge](https://www.selenium.dev/documentation/webdrive
 La URL probada es https://acostaalex10.github.io/SCGO/#/login.
 Para ejecutar sin ventana visible: `$env:HEADLESS = "1"`.
 
-Las pruebas fallidas guardan una captura en `screenshots/` y siempre cierran
-el navegador. `.pytest_cache/` es una caché generada por pytest y no necesita
-ediciones manuales.
+Antes de cada clic, las pruebas guardan una captura y resaltan con un borde rojo
+el botón, enlace u opción que se va a accionar. Las evidencias quedan agrupadas
+por caso en `screenshots/pasos/<nombre_del_test>/`. Cada archivo identifica el
+test, el número de paso y la acción, por ejemplo:
+
+```text
+test_registro_exitoso_muestra_mensaje_requerido__paso_03__abrir_nuevo_proyecto.png
+```
+
+Si una prueba falla, además se guarda el estado final en `screenshots/fallos/`.
+El navegador siempre se cierra al terminar. `.pytest_cache/` es una caché
+generada por pytest y no necesita ediciones manuales.
 
 Ejecutá el archivo Selenium indicado: `tests/test_1.py` incluye una falla
 intencional preexistente (`1 + 1 == 3`).

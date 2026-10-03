@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1790997574">
+  <project timestamp="1790997574" name="Clover Coverage">
+    <package name="Sgso\Http">
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Http\ManejadorErrores.php">
+        <class name="Sgso\Http\ManejadorErrores" namespace="Sgso\Http">
+          <metrics complexity="2" methods="1" coveredmethods="1" conditionals="4" coveredconditionals="4" statements="17" coveredstatements="17" elements="22" coveredelements="22"/>
+        </class>
+        <line num="31" type="method" name="atender" visibility="public" complexity="2" crap="2.15" count="2"/>
+        <line num="33" type="stmt" count="2"/>
+        <line num="37" type="stmt" count="2"/>
+        <line num="38" type="stmt" count="2"/>
+        <line num="39" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="2"/>
+        <line num="43" type="stmt" count="2"/>
+        <line num="44" type="stmt" count="2"/>
+        <line num="45" type="stmt" count="2"/>
+        <line num="46" type="stmt" count="2"/>
+        <line num="47" type="stmt" count="2"/>
+        <line num="48" type="stmt" count="2"/>
+        <line num="49" type="stmt" count="2"/>
+        <line num="50" type="stmt" count="2"/>
+        <line num="52" type="stmt" count="2"/>
+        <line num="53" type="stmt" count="2"/>
+        <line num="54" type="stmt" count="2"/>
+        <line num="55" type="stmt" count="2"/>
+        <metrics loc="58" ncloc="38" classes="1" methods="1" coveredmethods="1" conditionals="4" coveredconditionals="4" statements="17" coveredstatements="17" elements="22" coveredelements="22"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Http\Paginacion.php">
+        <class name="Sgso\Http\Paginacion" namespace="Sgso\Http">
+          <metrics complexity="20" methods="6" coveredmethods="6" conditionals="34" coveredconditionals="34" statements="22" coveredstatements="22" elements="62" coveredelements="62"/>
+        </class>
+        <line num="28" type="method" name="__construct" visibility="private" complexity="1" crap="1" count="6"/>
+        <line num="32" type="stmt" count="6"/>
+        <line num="41" type="method" name="desdeConsulta" visibility="public" complexity="12" crap="149.42" count="17"/>
+        <line num="43" type="stmt" count="17"/>
+        <line num="44" type="stmt" count="17"/>
+        <line num="45" type="stmt" count="17"/>
+        <line num="46" type="stmt" count="2"/>
+        <line num="49" type="stmt" count="15"/>
+        <line num="50" type="stmt" count="15"/>
+        <line num="51" type="stmt" count="7"/>
+        <line num="53" type="stmt" count="15"/>
+        <line num="54" type="stmt" count="3"/>
+        <line num="56" type="stmt" count="15"/>
+        <line num="57" type="stmt" count="9"/>
+        <line num="60" type="stmt" count="6"/>
+        <line num="68" type="method" name="sql" visibility="public" complexity="1" crap="1" count="6"/>
+        <line num="70" type="stmt" count="6"/>
+        <line num="80" type="method" name="aplicar" visibility="public" complexity="2" crap="2.50" count="1"/>
+        <line num="82" type="stmt" count="1"/>
+        <line num="83" type="stmt" count="1"/>
+        <line num="84" type="stmt" count="1"/>
+        <line num="85" type="stmt" count="1"/>
+        <line num="86" type="stmt" count="1"/>
+        <line num="89" type="stmt" count="1"/>
+        <line num="93" type="method" name="total" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="95" type="stmt" count="1"/>
+        <line num="98" type="method" name="esEntero" visibility="private" complexity="3" crap="3" count="15"/>
+        <line num="100" type="stmt" count="15"/>
+        <metrics loc="103" ncloc="70" classes="1" methods="6" coveredmethods="6" conditionals="34" coveredconditionals="34" statements="22" coveredstatements="22" elements="62" coveredelements="62"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Http\Salud.php">
+        <class name="Sgso\Http\Salud" namespace="Sgso\Http">
+          <metrics complexity="3" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+        </class>
+        <line num="29" type="method" name="comprobar" visibility="public" complexity="3" crap="12" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <metrics loc="42" ncloc="24" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="0" elements="6" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Sgso\Monitoreo">
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Monitoreo\Sentry.php">
+        <class name="Sgso\Monitoreo\Sentry" namespace="Sgso\Monitoreo">
+          <metrics complexity="18" methods="8" coveredmethods="8" conditionals="31" coveredconditionals="30" statements="78" coveredstatements="78" elements="117" coveredelements="116"/>
+        </class>
+        <line num="46" type="method" name="__construct" visibility="private" complexity="1" crap="1" count="3"/>
+        <line num="53" type="stmt" count="3"/>
+        <line num="61" type="method" name="desdeDsn" visibility="public" complexity="8" crap="32.98" count="11"/>
+        <line num="67" type="stmt" count="11"/>
+        <line num="68" type="stmt" count="11"/>
+        <line num="69" type="stmt" count="3"/>
+        <line num="72" type="stmt" count="8"/>
+        <line num="73" type="stmt" count="8"/>
+        <line num="74" type="stmt" count="2"/>
+        <line num="77" type="stmt" count="6"/>
+        <line num="78" type="stmt" count="6"/>
+        <line num="79" type="stmt" count="6"/>
+        <line num="80" type="stmt" count="6"/>
+        <line num="82" type="stmt" count="6"/>
+        <line num="83" type="stmt" count="3"/>
+        <line num="86" type="stmt" count="3"/>
+        <line num="88" type="stmt" count="3"/>
+        <line num="89" type="stmt" count="3"/>
+        <line num="90" type="stmt" count="3"/>
+        <line num="91" type="stmt" count="3"/>
+        <line num="92" type="stmt" count="3"/>
+        <line num="93" type="stmt" count="3"/>
+        <line num="94" type="stmt" count="3"/>
+        <line num="103" type="method" name="reportar" visibility="public" complexity="2" crap="2" count="3"/>
+        <line num="106" type="stmt" count="3"/>
+        <line num="107" type="stmt" count="3"/>
+        <line num="109" type="stmt" count="2"/>
+        <line num="110" type="stmt" count="1"/>
+        <line num="113" type="stmt" count="1"/>
+        <line num="118" type="method" name="cabeceras" visibility="private" complexity="1" crap="1" count="3"/>
+        <line num="120" type="stmt" count="3"/>
+        <line num="121" type="stmt" count="3"/>
+        <line num="122" type="stmt" count="3"/>
+        <line num="123" type="stmt" count="3"/>
+        <line num="124" type="stmt" count="3"/>
+        <line num="125" type="stmt" count="3"/>
+        <line num="126" type="stmt" count="3"/>
+        <line num="127" type="stmt" count="3"/>
+        <line num="131" type="method" name="envelope" visibility="private" complexity="1" crap="1" count="3"/>
+        <line num="133" type="stmt" count="3"/>
+        <line num="134" type="stmt" count="3"/>
+        <line num="136" type="stmt" count="3"/>
+        <line num="137" type="stmt" count="3"/>
+        <line num="138" type="stmt" count="3"/>
+        <line num="139" type="stmt" count="3"/>
+        <line num="140" type="stmt" count="3"/>
+        <line num="141" type="stmt" count="3"/>
+        <line num="142" type="stmt" count="3"/>
+        <line num="143" type="stmt" count="3"/>
+        <line num="144" type="stmt" count="3"/>
+        <line num="145" type="stmt" count="3"/>
+        <line num="146" type="stmt" count="3"/>
+        <line num="147" type="stmt" count="3"/>
+        <line num="148" type="stmt" count="3"/>
+        <line num="149" type="stmt" count="3"/>
+        <line num="151" type="stmt" count="3"/>
+        <line num="152" type="stmt" count="3"/>
+        <line num="153" type="stmt" count="3"/>
+        <line num="154" type="stmt" count="3"/>
+        <line num="155" type="stmt" count="3"/>
+        <line num="164" type="method" name="marcos" visibility="private" complexity="2" crap="3.19" count="3"/>
+        <line num="166" type="stmt" count="3"/>
+        <line num="167" type="stmt" count="3"/>
+        <line num="168" type="stmt" count="3"/>
+        <line num="169" type="stmt" count="3"/>
+        <line num="170" type="stmt" count="3"/>
+        <line num="172" type="stmt" count="3"/>
+        <line num="173" type="stmt" count="3"/>
+        <line num="174" type="stmt" count="3"/>
+        <line num="175" type="stmt" count="3"/>
+        <line num="176" type="stmt" count="3"/>
+        <line num="177" type="stmt" count="3"/>
+        <line num="180" type="stmt" count="3"/>
+        <line num="183" type="method" name="ocultarSecretos" visibility="private" complexity="2" crap="2" count="3"/>
+        <line num="185" type="stmt" count="3"/>
+        <line num="186" type="stmt" count="2"/>
+        <line num="187" type="stmt" count="3"/>
+        <line num="191" type="method" name="transportePorHttp" visibility="private" complexity="1" crap="1" count="1"/>
+        <line num="193" type="stmt" count="1"/>
+        <line num="194" type="stmt" count="1"/>
+        <line num="195" type="stmt" count="1"/>
+        <line num="196" type="stmt" count="1"/>
+        <line num="197" type="stmt" count="1"/>
+        <line num="200" type="stmt" count="1"/>
+        <line num="201" type="stmt" count="1"/>
+        <line num="203" type="stmt" count="1"/>
+        <metrics loc="206" ncloc="152" classes="1" methods="8" coveredmethods="8" conditionals="31" coveredconditionals="30" statements="78" coveredstatements="78" elements="117" coveredelements="116"/>
+      </file>
+    </package>
+    <package name="Sgso\Reglas">
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\Certificacion.php">
+        <class name="Sgso\Reglas\Certificacion" namespace="Sgso\Reglas">
+          <metrics complexity="1" methods="1" coveredmethods="1" conditionals="1" coveredconditionals="1" statements="1" coveredstatements="1" elements="3" coveredelements="3"/>
+        </class>
+        <line num="21" type="method" name="monto" visibility="public" complexity="1" crap="1" count="6"/>
+        <line num="23" type="stmt" count="6"/>
+        <metrics loc="26" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="1" coveredconditionals="1" statements="1" coveredstatements="1" elements="3" coveredelements="3"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\CicloDeVida.php">
+        <class name="Sgso\Reglas\CicloDeVida" namespace="Sgso\Reglas">
+          <metrics complexity="20" methods="12" coveredmethods="12" conditionals="32" coveredconditionals="32" statements="14" coveredstatements="14" elements="58" coveredelements="58"/>
+        </class>
+        <line num="67" type="method" name="esEstado" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="69" type="stmt" count="8"/>
+        <line num="72" type="method" name="esTerminal" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="74" type="stmt" count="8"/>
+        <line num="85" type="method" name="alCargarPlanificacion" visibility="public" complexity="2" crap="2" count="8"/>
+        <line num="87" type="stmt" count="8"/>
+        <line num="95" type="method" name="alBorrarPlanificacion" visibility="public" complexity="2" crap="2" count="8"/>
+        <line num="97" type="stmt" count="8"/>
+        <line num="110" type="method" name="arrancaPorAvance" visibility="public" complexity="2" crap="2" count="5"/>
+        <line num="112" type="stmt" count="5"/>
+        <line num="122" type="method" name="aceptaAvance" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="124" type="stmt" count="8"/>
+        <line num="132" type="method" name="debePausar" visibility="public" complexity="2" crap="2" count="5"/>
+        <line num="134" type="stmt" count="5"/>
+        <line num="138" type="method" name="debeReactivar" visibility="public" complexity="2" crap="2" count="5"/>
+        <line num="140" type="stmt" count="5"/>
+        <line num="150" type="method" name="destinoAlReactivar" visibility="public" complexity="2" crap="2" count="2"/>
+        <line num="152" type="stmt" count="2"/>
+        <line num="160" type="method" name="puedeCancelar" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="162" type="stmt" count="8"/>
+        <line num="173" type="method" name="puedeEnviarReporteFinal" visibility="public" complexity="1" crap="1" count="8"/>
+        <line num="175" type="stmt" count="8"/>
+        <line num="186" type="method" name="destinoTrasResolverFinal" visibility="public" complexity="3" crap="3" count="4"/>
+        <line num="188" type="stmt" count="4"/>
+        <line num="189" type="stmt" count="1"/>
+        <line num="192" type="stmt" count="3"/>
+        <metrics loc="195" ncloc="104" classes="1" methods="12" coveredmethods="12" conditionals="32" coveredconditionals="32" statements="14" coveredstatements="14" elements="58" coveredelements="58"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\ConsumoMaquinaria.php">
+        <class name="Sgso\Reglas\ConsumoMaquinaria" namespace="Sgso\Reglas">
+          <metrics complexity="4" methods="2" coveredmethods="2" conditionals="7" coveredconditionals="7" statements="2" coveredstatements="2" elements="11" coveredelements="11"/>
+        </class>
+        <line num="25" type="method" name="porHora" visibility="public" complexity="2" crap="2" count="6"/>
+        <line num="27" type="stmt" count="6"/>
+        <line num="31" type="method" name="esAnomalo" visibility="public" complexity="2" crap="2" count="6"/>
+        <line num="33" type="stmt" count="6"/>
+        <metrics loc="36" ncloc="21" classes="1" methods="2" coveredmethods="2" conditionals="7" coveredconditionals="7" statements="2" coveredstatements="2" elements="11" coveredelements="11"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\Enlaces.php">
+        <class name="Sgso\Reglas\Enlaces" namespace="Sgso\Reglas">
+          <metrics complexity="6" methods="1" coveredmethods="0" conditionals="11" coveredconditionals="10" statements="10" coveredstatements="9" elements="22" coveredelements="19"/>
+        </class>
+        <line num="28" type="method" name="esSeguro" visibility="public" complexity="6" crap="10.50" count="14"/>
+        <line num="32" type="stmt" count="14"/>
+        <line num="33" type="stmt" count="4"/>
+        <line num="36" type="stmt" count="10"/>
+        <line num="37" type="stmt" count="3"/>
+        <line num="40" type="stmt" count="7"/>
+        <line num="41" type="stmt" count="7"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="7"/>
+        <line num="46" type="stmt" count="7"/>
+        <line num="48" type="stmt" count="7"/>
+        <metrics loc="51" ncloc="32" classes="1" methods="1" coveredmethods="0" conditionals="11" coveredconditionals="10" statements="10" coveredstatements="9" elements="22" coveredelements="19"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\Permisos.php">
+        <class name="Sgso\Reglas\Permisos" namespace="Sgso\Reglas">
+          <metrics complexity="3" methods="2" coveredmethods="2" conditionals="4" coveredconditionals="4" statements="10" coveredstatements="10" elements="16" coveredelements="16"/>
+        </class>
+        <line num="53" type="method" name="grupos" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="55" type="stmt" count="1"/>
+        <line num="56" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="59" type="stmt" count="1"/>
+        <line num="60" type="stmt" count="1"/>
+        <line num="61" type="stmt" count="1"/>
+        <line num="73" type="method" name="puede" visibility="public" complexity="2" crap="2" count="30"/>
+        <line num="75" type="stmt" count="30"/>
+        <line num="76" type="stmt" count="5"/>
+        <line num="79" type="stmt" count="25"/>
+        <metrics loc="82" ncloc="51" classes="1" methods="2" coveredmethods="2" conditionals="4" coveredconditionals="4" statements="10" coveredstatements="10" elements="16" coveredelements="16"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Reglas\ProtocoloIncidencias.php">
+        <class name="Sgso\Reglas\ProtocoloIncidencias" namespace="Sgso\Reglas">
+          <metrics complexity="4" methods="1" coveredmethods="1" conditionals="5" coveredconditionals="5" statements="5" coveredstatements="5" elements="11" coveredelements="11"/>
+        </class>
+        <line num="19" type="method" name="rolesAAvisar" visibility="public" complexity="4" crap="4" count="6"/>
+        <line num="21" type="stmt" count="6"/>
+        <line num="22" type="stmt" count="1"/>
+        <line num="23" type="stmt" count="1"/>
+        <line num="24" type="stmt" count="6"/>
+        <line num="25" type="stmt" count="6"/>
+        <metrics loc="28" ncloc="18" classes="1" methods="1" coveredmethods="1" conditionals="5" coveredconditionals="5" statements="5" coveredstatements="5" elements="11" coveredelements="11"/>
+      </file>
+    </package>
+    <package name="Sgso\Ruteo">
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Ruteo\Despachador.php">
+        <class name="Sgso\Ruteo\Despachador" namespace="Sgso\Ruteo">
+          <metrics complexity="17" methods="4" coveredmethods="4" conditionals="35" coveredconditionals="35" statements="28" coveredstatements="28" elements="67" coveredelements="67"/>
+        </class>
+        <line num="16" type="method" name="resolver" visibility="public" complexity="5" crap="16.76" count="12"/>
+        <line num="18" type="stmt" count="12"/>
+        <line num="20" type="stmt" count="12"/>
+        <line num="21" type="stmt" count="12"/>
+        <line num="22" type="stmt" count="12"/>
+        <line num="23" type="stmt" count="11"/>
+        <line num="26" type="stmt" count="7"/>
+        <line num="27" type="stmt" count="7"/>
+        <line num="28" type="stmt" count="6"/>
+        <line num="32" type="stmt" count="6"/>
+        <line num="46" type="method" name="caminoEsPublico" visibility="public" complexity="4" crap="8.74" count="6"/>
+        <line num="48" type="stmt" count="6"/>
+        <line num="49" type="stmt" count="6"/>
+        <line num="50" type="stmt" count="2"/>
+        <line num="54" type="stmt" count="4"/>
+        <line num="58" type="method" name="parametros" visibility="private" complexity="6" crap="8.83" count="18"/>
+        <line num="60" type="stmt" count="18"/>
+        <line num="61" type="stmt" count="18"/>
+        <line num="62" type="stmt" count="18"/>
+        <line num="63" type="stmt" count="16"/>
+        <line num="66" type="stmt" count="17"/>
+        <line num="67" type="stmt" count="17"/>
+        <line num="68" type="stmt" count="15"/>
+        <line num="69" type="stmt" count="15"/>
+        <line num="70" type="stmt" count="8"/>
+        <line num="71" type="stmt" count="2"/>
+        <line num="73" type="stmt" count="6"/>
+        <line num="74" type="stmt" count="15"/>
+        <line num="75" type="stmt" count="10"/>
+        <line num="79" type="stmt" count="11"/>
+        <line num="83" type="method" name="segmentos" visibility="private" complexity="2" crap="2" count="18"/>
+        <line num="85" type="stmt" count="18"/>
+        <metrics loc="88" ncloc="68" classes="1" methods="4" coveredmethods="4" conditionals="35" coveredconditionals="35" statements="28" coveredstatements="28" elements="67" coveredelements="67"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Ruteo\Resolucion.php">
+        <class name="Sgso\Ruteo\Resolucion" namespace="Sgso\Ruteo">
+          <metrics complexity="4" methods="4" coveredmethods="4" conditionals="4" coveredconditionals="4" statements="4" coveredstatements="4" elements="12" coveredelements="12"/>
+        </class>
+        <line num="14" type="method" name="__construct" visibility="private" complexity="1" crap="1" count="12"/>
+        <line num="19" type="stmt" count="12"/>
+        <line num="22" type="method" name="encontrada" visibility="public" complexity="1" crap="1" count="6"/>
+        <line num="24" type="stmt" count="6"/>
+        <line num="27" type="method" name="noEncontrada" visibility="public" complexity="1" crap="1" count="5"/>
+        <line num="29" type="stmt" count="5"/>
+        <line num="32" type="method" name="metodoNoPermitido" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="34" type="stmt" count="1"/>
+        <metrics loc="37" ncloc="35" classes="1" methods="4" coveredmethods="4" conditionals="4" coveredconditionals="4" statements="4" coveredstatements="4" elements="12" coveredelements="12"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Ruteo\Ruta.php">
+        <class name="Sgso\Ruteo\Ruta" namespace="Sgso\Ruteo">
+          <metrics complexity="1" methods="1" coveredmethods="1" conditionals="1" coveredconditionals="1" statements="1" coveredstatements="1" elements="3" coveredelements="3"/>
+        </class>
+        <line num="10" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="18"/>
+        <line num="17" type="stmt" count="18"/>
+        <metrics loc="19" ncloc="18" classes="1" methods="1" coveredmethods="1" conditionals="1" coveredconditionals="1" statements="1" coveredstatements="1" elements="3" coveredelements="3"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Ruteo\Tabla.php">
+        <class name="Sgso\Ruteo\Tabla" namespace="Sgso\Ruteo">
+          <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="119" coveredstatements="0" elements="120" coveredelements="0"/>
+        </class>
+        <line num="12" type="method" name="rutas" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="72" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="82" type="stmt" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="84" type="stmt" count="0"/>
+        <line num="85" type="stmt" count="0"/>
+        <line num="86" type="stmt" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="90" type="stmt" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="93" type="stmt" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="97" type="stmt" count="0"/>
+        <line num="98" type="stmt" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="101" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="116" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="119" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="124" type="stmt" count="0"/>
+        <line num="125" type="stmt" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <line num="128" type="stmt" count="0"/>
+        <line num="129" type="stmt" count="0"/>
+        <line num="130" type="stmt" count="0"/>
+        <line num="131" type="stmt" count="0"/>
+        <line num="132" type="stmt" count="0"/>
+        <line num="133" type="stmt" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="135" type="stmt" count="0"/>
+        <line num="136" type="stmt" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <metrics loc="140" ncloc="139" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="119" coveredstatements="0" elements="120" coveredelements="0"/>
+      </file>
+    </package>
+    <package name="Sgso\Seguridad">
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Seguridad\IntentosLogin.php">
+        <class name="Sgso\Seguridad\IntentosLogin" namespace="Sgso\Seguridad">
+          <metrics complexity="9" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="36" coveredelements="0"/>
+        </class>
+        <line num="34" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="39" type="method" name="claveDeCuenta" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="45" type="method" name="segundosDeEspera" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="65" type="method" name="registrarFallo" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="68" type="stmt" count="0"/>
+        <line num="75" type="stmt" count="0"/>
+        <line num="76" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
+        <line num="85" type="method" name="limpiar" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="89" type="stmt" count="0"/>
+        <line num="92" type="method" name="ahora" visibility="private" complexity="1" crap="2" count="0"/>
+        <line num="94" type="stmt" count="0"/>
+        <line num="97" type="method" name="asegurarTabla" visibility="private" complexity="2" crap="6" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="108" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <metrics loc="113" ncloc="86" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="36" coveredelements="0"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Seguridad\PoliticaContrasena.php">
+        <class name="Sgso\Seguridad\PoliticaContrasena" namespace="Sgso\Seguridad">
+          <metrics complexity="4" methods="1" coveredmethods="1" conditionals="7" coveredconditionals="7" statements="7" coveredstatements="7" elements="15" coveredelements="15"/>
+        </class>
+        <line num="56" type="method" name="validar" visibility="public" complexity="4" crap="4" count="9"/>
+        <line num="60" type="stmt" count="9"/>
+        <line num="61" type="stmt" count="3"/>
+        <line num="64" type="stmt" count="6"/>
+        <line num="65" type="stmt" count="2"/>
+        <line num="68" type="stmt" count="4"/>
+        <line num="69" type="stmt" count="2"/>
+        <line num="72" type="stmt" count="2"/>
+        <metrics loc="75" ncloc="50" classes="1" methods="1" coveredmethods="1" conditionals="7" coveredconditionals="7" statements="7" coveredstatements="7" elements="15" coveredelements="15"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Seguridad\PoliticaIntentos.php">
+        <class name="Sgso\Seguridad\PoliticaIntentos" namespace="Sgso\Seguridad">
+          <metrics complexity="6" methods="3" coveredmethods="3" conditionals="9" coveredconditionals="9" statements="8" coveredstatements="8" elements="20" coveredelements="20"/>
+        </class>
+        <line num="41" type="method" name="segundosDeEspera" visibility="public" complexity="3" crap="3.14" count="9"/>
+        <line num="43" type="stmt" count="9"/>
+        <line num="44" type="stmt" count="3"/>
+        <line num="47" type="stmt" count="6"/>
+        <line num="54" type="method" name="espera" visibility="public" complexity="2" crap="2" count="16"/>
+        <line num="56" type="stmt" count="16"/>
+        <line num="57" type="stmt" count="3"/>
+        <line num="60" type="stmt" count="13"/>
+        <line num="62" type="stmt" count="13"/>
+        <line num="66" type="method" name="olvidado" visibility="public" complexity="1" crap="1" count="9"/>
+        <line num="68" type="stmt" count="9"/>
+        <metrics loc="71" ncloc="42" classes="1" methods="3" coveredmethods="3" conditionals="9" coveredconditionals="9" statements="8" coveredstatements="8" elements="20" coveredelements="20"/>
+      </file>
+      <file name="C:\Users\brian\Documents\Codex\2026-09-23\da\scgo_source\SCGO-main\back\src\Seguridad\SecretoJwt.php">
+        <class name="Sgso\Seguridad\SecretoJwt" namespace="Sgso\Seguridad">
+          <metrics complexity="5" methods="1" coveredmethods="1" conditionals="9" coveredconditionals="9" statements="13" coveredstatements="13" elements="23" coveredelements="23"/>
+        </class>
+        <line num="41" type="method" name="validar" visibility="public" complexity="5" crap="6.32" count="9"/>
+        <line num="43" type="stmt" count="9"/>
+        <line num="44" type="stmt" count="3"/>
+        <line num="45" type="stmt" count="3"/>
+        <line num="46" type="stmt" count="3"/>
+        <line num="49" type="stmt" count="6"/>
+        <line num="50" type="stmt" count="2"/>
+        <line num="51" type="stmt" count="2"/>
+        <line num="52" type="stmt" count="2"/>
+        <line num="55" type="stmt" count="4"/>
+        <line num="56" type="stmt" count="1"/>
+        <line num="57" type="stmt" count="1"/>
+        <line num="58" type="stmt" count="1"/>
+        <line num="61" type="stmt" count="3"/>
+        <metrics loc="64" ncloc="41" classes="1" methods="1" coveredmethods="1" conditionals="9" coveredconditionals="9" statements="13" coveredstatements="13" elements="23" coveredelements="23"/>
+      </file>
+    </package>
+    <metrics files="18" loc="1434" ncloc="1003" classes="18" methods="57" coveredmethods="47" conditionals="194" coveredconditionals="192" statements="373" coveredstatements="219" elements="624" coveredelements="458"/>
+  </project>
+</coverage>

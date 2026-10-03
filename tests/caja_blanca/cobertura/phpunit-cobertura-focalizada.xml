@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="../vendor/autoload.php"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true">
+    <source>
+        <include>
+            <file>../src/Http/ManejadorErrores.php</file>
+            <file>../src/Http/Paginacion.php</file>
+            <file>../src/Monitoreo/Sentry.php</file>
+            <file>../src/Reglas/Certificacion.php</file>
+            <file>../src/Reglas/CicloDeVida.php</file>
+            <file>../src/Reglas/ConsumoMaquinaria.php</file>
+            <file>../src/Reglas/Enlaces.php</file>
+            <file>../src/Reglas/Permisos.php</file>
+            <file>../src/Reglas/ProtocoloIncidencias.php</file>
+            <file>../src/Ruteo/Despachador.php</file>
+            <file>../src/Ruteo/Resolucion.php</file>
+            <file>../src/Ruteo/Ruta.php</file>
+            <file>../src/Seguridad/PoliticaContrasena.php</file>
+            <file>../src/Seguridad/PoliticaIntentos.php</file>
+            <file>../src/Seguridad/SecretoJwt.php</file>
+        </include>
+    </source>
+</phpunit>

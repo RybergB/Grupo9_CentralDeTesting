@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Sgso\Tests\CajaBlanca;
 
 use PDO;
+use ReflectionClass;
+use RuntimeException;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Sgso\MaterialObraController;
 use Sgso\ProyectoController;
@@ -24,93 +28,208 @@ use Sgso\Seguridad\PoliticaIntentos;
 #[CoversClass(PoliticaIntentos::class)]
 final class FlujosTp1Test extends TestCase
 {
-    public function testCamposObligatoriosRecorrenLaRama422SinGuardar(): void
+    /** @return iterable<string, array{string}> */
+    public static function camposObligatorios(): iterable
     {
-        $repositorio = new RepositorioProyectoFalso();
-
-        $respuesta = $this->capturar(
-            fn () => (new ProyectoController($repositorio))->registrar([])
-        );
-
-        self::assertSame(422, $respuesta['codigo']);
-        self::assertSame(
-            ['nombre', 'tipo', 'ubicacion', 'encargado', 'fechaInicio', 'presupuesto'],
-            array_keys($respuesta['cuerpo']['errors'])
-        );
-        self::assertSame(0, $repositorio->consultasDuplicado);
-        self::assertSame(0, $repositorio->creaciones);
+        foreach (['nombre', 'tipo', 'ubicacion', 'encargado', 'fechaInicio', 'presupuesto'] as $campo) {
+            yield "R1-CB-01 | {$campo} ausente" => [$campo];
+        }
     }
 
-    public function testObraDuplicadaRecorreLaRama409SinGuardar(): void
+    #[DataProvider('camposObligatorios')]
+    public function testR1Cb01CampoObligatorioAgrupaRespuestaYAusenciaDeGuardado(string $campo): void
     {
-        $repositorio = new RepositorioProyectoFalso(duplicado: true);
+        $repositorio = new RepositorioProyectoFalso();
+        $datos = $this->obraValida();
+        unset($datos[$campo]);
 
+        $respuesta = $this->capturar(
+            fn () => (new ProyectoController($repositorio))->registrar($datos)
+        );
+
+        self::assertSame(
+            [
+                'codigo' => 422,
+                'errores' => [$campo => 'Obligatorio'],
+                'consultasDuplicado' => 0,
+                'creaciones' => 0,
+            ],
+            [
+                'codigo' => $respuesta['codigo'],
+                'errores' => $respuesta['cuerpo']['errors'] ?? [],
+                'consultasDuplicado' => $repositorio->consultasDuplicado,
+                'creaciones' => $repositorio->creaciones,
+            ]
+        );
+    }
+
+    #[TestDox('R1-CB-01.7 | todos los campos válidos | obra registrada')]
+    public function testR1Cb017TodosLosCamposValidosRegistranLaObra(): void
+    {
+        $repositorio = new RepositorioProyectoFalso();
         $respuesta = $this->conGeocoderValido(
             fn () => $this->capturar(
                 fn () => (new ProyectoController($repositorio))->registrar($this->obraValida())
             )
         );
 
-        self::assertSame(409, $respuesta['codigo']);
-        self::assertSame('Obra ya existente', $respuesta['cuerpo']['error']);
-        self::assertSame(1, $repositorio->consultasDuplicado);
-        self::assertSame(0, $repositorio->creaciones);
+        self::assertSame(
+            [
+                'codigo' => 201,
+                'id' => '1',
+                'consultasDuplicado' => 1,
+                'creaciones' => 1,
+            ],
+            [
+                'codigo' => $respuesta['codigo'],
+                'id' => $respuesta['cuerpo']['id'] ?? null,
+                'consultasDuplicado' => $repositorio->consultasDuplicado,
+                'creaciones' => $repositorio->creaciones,
+            ]
+        );
     }
 
-    public function testElEstadoDelPedidoSeIgnoraYLaObraArrancaCreada(): void
+    public function testR1Cb02ObraDuplicadaAgrupaRespuestaYAusenciaDeGuardado(): void
+    {
+        $repositorio = new RepositorioProyectoFalso(duplicado: true);
+        $respuesta = $this->conGeocoderValido(
+            fn () => $this->capturar(
+                fn () => (new ProyectoController($repositorio))->registrar($this->obraValida())
+            )
+        );
+
+        self::assertSame(
+            [
+                'codigo' => 409,
+                'error' => 'Obra ya existente',
+                'consultasDuplicado' => 1,
+                'creaciones' => 0,
+            ],
+            [
+                'codigo' => $respuesta['codigo'],
+                'error' => $respuesta['cuerpo']['error'] ?? null,
+                'consultasDuplicado' => $repositorio->consultasDuplicado,
+                'creaciones' => $repositorio->creaciones,
+            ]
+        );
+    }
+
+    public function testR1Cb03EstadoInicialAgrupaRespuestaYPersistencia(): void
     {
         $repositorio = new RepositorioProyectoFalso();
         $datos = $this->obraValida() + ['estado' => 'cancelada'];
-
         $respuesta = $this->conGeocoderValido(
             fn () => $this->capturar(
                 fn () => (new ProyectoController($repositorio))->registrar($datos)
             )
         );
 
-        self::assertSame(201, $respuesta['codigo']);
-        self::assertSame('creada', $respuesta['cuerpo']['estado']);
-        self::assertSame('creada', $repositorio->ultimoCreado['estado']);
+        self::assertSame(
+            ['codigo' => 201, 'estadoRespuesta' => 'creada', 'estadoPersistido' => 'creada'],
+            [
+                'codigo' => $respuesta['codigo'],
+                'estadoRespuesta' => $respuesta['cuerpo']['estado'] ?? null,
+                'estadoPersistido' => $repositorio->ultimoCreado['estado'] ?? null,
+            ]
+        );
     }
 
-    public function testConsumirExactamenteLoAsignadoCubreElLimiteSinExceso(): void
+    public function testR2Cb01LimiteExactoDeMaterialAgrupaTodasLasSalidas(): void
     {
         $controlador = new MaterialObraController($this->baseMaterial(asignado: 10, consumido: 10));
-
         $respuesta = $this->capturar(fn () => $controlador->listarPorProyecto('1'));
         $material = $respuesta['cuerpo'][0];
 
-        self::assertSame(200, $respuesta['codigo']);
-        self::assertEqualsWithDelta(0.0, (float) $material['restante'], 0.001);
-        self::assertFalse($material['excedido']);
+        self::assertSame(
+            ['codigo' => 200, 'restante' => 0.0, 'excedido' => false],
+            [
+                'codigo' => $respuesta['codigo'],
+                'restante' => (float) $material['restante'],
+                'excedido' => (bool) $material['excedido'],
+            ]
+        );
     }
 
-    public function testConsumirMasDeLoAsignadoDebeSerRechazado(): void
+    public function testR2Cb02StockInsuficienteAgrupaRespuestaYAusenciaDePersistencia(): void
     {
         $db = $this->baseMaterial(asignado: 10, consumido: 0);
         $controlador = new MaterialObraController($db);
-
         $respuesta = $this->capturar(fn () => $controlador->crearConsumo('1', [
             'cantidad_consumida' => 11,
             'fecha' => '2026-03-02',
         ]));
 
-        self::assertSame(409, $respuesta['codigo']);
-        self::assertSame('Stock insuficiente', $respuesta['cuerpo']['error']);
         self::assertSame(
-            0,
-            (int) $db->query('SELECT COUNT(*) FROM consumo_material WHERE cantidad_consumida > 0')->fetchColumn(),
-            'El consumo no debe persistirse cuando supera la disponibilidad'
+            ['codigo' => 409, 'error' => 'Stock insuficiente', 'consumosPositivos' => 0],
+            [
+                'codigo' => $respuesta['codigo'],
+                'error' => $respuesta['cuerpo']['error'] ?? null,
+                'consumosPositivos' => (int) $db->query(
+                    'SELECT COUNT(*) FROM consumo_material WHERE cantidad_consumida > 0'
+                )->fetchColumn(),
+            ]
         );
     }
 
-    public function testIntentosFallidosCubrenAntesEnYDespuesDelLimite(): void
+    /** @return iterable<string, array{int, int, int}> */
+    public static function fronterasIntentosFallidos(): iterable
     {
-        self::assertSame(0, PoliticaIntentos::segundosDeEspera(4, 0));
-        self::assertSame(60, PoliticaIntentos::segundosDeEspera(5, 0));
-        self::assertSame(1, PoliticaIntentos::segundosDeEspera(5, 59));
-        self::assertSame(0, PoliticaIntentos::segundosDeEspera(5, 60));
-        self::assertSame(0, PoliticaIntentos::segundosDeEspera(50, PoliticaIntentos::VENTANA));
+        yield 'R2-CB-03.1 | antes del límite | espera 0 s' => [4, 0, 0];
+        yield 'R2-CB-03.2 | en el límite | espera 60 s' => [5, 0, 60];
+        yield 'R2-CB-03.3 | un segundo restante | espera 1 s' => [5, 59, 1];
+        yield 'R2-CB-03.4 | espera cumplida | espera 0 s' => [5, 60, 0];
+        yield 'R2-CB-03.5 | ventana vencida | espera 0 s' => [50, PoliticaIntentos::VENTANA, 0];
+    }
+
+    #[DataProvider('fronterasIntentosFallidos')]
+    public function testR2Cb03IntentosFallidosPorCombinacion(
+        int $fallos,
+        int $segundosDesdeUltimoFallo,
+        int $esperaEsperada
+    ): void {
+        self::assertSame(
+            $esperaEsperada,
+            PoliticaIntentos::segundosDeEspera($fallos, $segundosDesdeUltimoFallo)
+        );
+    }
+
+
+    public function testR2Cb04CancelarConsumoDescartaElBorradorSinGuardar(): void
+    {
+        $archivoBackend = (new ReflectionClass(MaterialObraController::class))->getFileName();
+        if ($archivoBackend === false) {
+            throw new RuntimeException('No se pudo localizar el backend de SCGO');
+        }
+
+        $raizRepositorio = dirname(dirname(dirname($archivoBackend)));
+        $ruta = $raizRepositorio . '/FRONT/src/app/components/MaterialesPage.tsx';
+        if (!is_file($ruta)) {
+            throw new RuntimeException("No se encontró el componente de materiales en {$ruta}");
+        }
+
+        $codigo = (string) file_get_contents($ruta);
+        preg_match(
+            '/function\\s+cancelarConsumo\\s*\\(idAsig:\\s*number\\)\\s*\\{(.*?)\\n\\s*\\}/s',
+            $codigo,
+            $coincidencia
+        );
+        $cuerpoCancelar = $coincidencia[1] ?? '';
+
+        self::assertSame(
+            [
+                'botonCancelarVisible' => true,
+                'manejadorCancelarExiste' => true,
+                'borradorDescartado' => true,
+                'sinLlamadaCrearConsumo' => true,
+            ],
+            [
+                'botonCancelarVisible' => str_contains($codigo, '>Cancelar</Button>'),
+                'manejadorCancelarExiste' => $cuerpoCancelar !== '',
+                'borradorDescartado' => str_contains($cuerpoCancelar, 'setConsumoInput'),
+                'sinLlamadaCrearConsumo' => $cuerpoCancelar !== ''
+                    && !str_contains($cuerpoCancelar, 'crearConsumo'),
+            ]
+        );
     }
 
     /** @return array<string, mixed> */
@@ -145,8 +264,13 @@ final class FlujosTp1Test extends TestCase
 
     private function conGeocoderValido(callable $accion): mixed
     {
-        self::assertTrue(stream_wrapper_unregister('https'));
-        self::assertTrue(stream_wrapper_register('https', FlujoHttpsFalso::class));
+        if (!stream_wrapper_unregister('https')) {
+            throw new RuntimeException('No se pudo reemplazar el transporte HTTPS para la prueba');
+        }
+        if (!stream_wrapper_register('https', FlujoHttpsFalso::class)) {
+            stream_wrapper_restore('https');
+            throw new RuntimeException('No se pudo registrar el transporte HTTPS falso');
+        }
         try {
             return $accion();
         } finally {
@@ -259,3 +383,5 @@ final class FlujoHttpsFalso
         return [];
     }
 }
+
+

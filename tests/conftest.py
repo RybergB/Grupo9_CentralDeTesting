@@ -13,6 +13,77 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.edge.service import Service
 
 
+def _nombre_seguro(valor, maximo=90):
+    """Convierte el nombre del caso o del paso en un nombre de archivo estable."""
+
+    limpio = "".join(
+        caracter if caracter.isalnum() or caracter in "-_" else "_"
+        for caracter in valor
+    ).strip("_")
+    return (limpio or "sin_nombre")[:maximo]
+
+
+class EvidenciaPasos:
+    """Captura el estado visible inmediatamente antes de cada clic."""
+
+    def __init__(self, browser, nombre_test):
+        self.browser = browser
+        self.nombre_test = _nombre_seguro(nombre_test)
+        self.numero_paso = 0
+        self.carpeta = Path("screenshots") / "pasos" / self.nombre_test
+        self.carpeta.mkdir(parents=True, exist_ok=True)
+
+    def capturar(self, descripcion, elemento=None):
+        self.numero_paso += 1
+        nombre_paso = _nombre_seguro(descripcion)
+        archivo = self.carpeta / (
+            f"{self.nombre_test}__paso_{self.numero_paso:02d}__{nombre_paso}.png"
+        )
+
+        borde_anterior = None
+        if elemento is not None:
+            try:
+                self.browser.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+                    elemento,
+                )
+                borde_anterior = self.browser.execute_script(
+                    "const anterior = arguments[0].style.outline; "
+                    "arguments[0].style.outline = '4px solid #e11d48'; "
+                    "return anterior;",
+                    elemento,
+                )
+            except WebDriverException:
+                borde_anterior = None
+
+        try:
+            if not self.browser.save_screenshot(str(archivo)):
+                warnings.warn(f"Edge no pudo guardar la captura {archivo}")
+        except WebDriverException as exc:
+            warnings.warn(
+                f"No se pudo guardar la captura del paso {self.numero_paso}: "
+                f"{type(exc).__name__}"
+            )
+        finally:
+            if elemento is not None:
+                try:
+                    self.browser.execute_script(
+                        "arguments[0].style.outline = arguments[1] || '';",
+                        elemento,
+                        borde_anterior,
+                    )
+                except WebDriverException:
+                    pass
+
+        return archivo
+
+    def click(self, elemento, descripcion):
+        """Toma la evidencia y sólo después ejecuta el clic solicitado."""
+
+        self.capturar(descripcion, elemento)
+        elemento.click()
+
+
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
@@ -49,6 +120,7 @@ def driver(request):
     driver_path = os.getenv("EDGE_DRIVER_PATH")
     service = Service(executable_path=driver_path) if driver_path else Service()
     browser = webdriver.Edge(options=options, service=service)
+    browser.evidencia = EvidenciaPasos(browser, request.node.name)
     browser.set_page_load_timeout(60)
     try:
         yield browser
@@ -60,12 +132,14 @@ def driver(request):
                 for phase in ("setup", "call")
             )
             if failed:
-                folder = Path("screenshots")
-                folder.mkdir(exist_ok=True)
+                folder = Path("screenshots") / "fallos"
+                folder.mkdir(parents=True, exist_ok=True)
                 stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-                name = "".join(c if c.isalnum() or c in "-_" else "_" for c in request.node.name)
+                name = _nombre_seguro(request.node.name)
                 try:
-                    browser.save_screenshot(str(folder / f"{name}_{stamp}.png"))
+                    browser.save_screenshot(
+                        str(folder / f"{name}__fallo__{stamp}.png")
+                    )
                 except WebDriverException as exc:
                     warnings.warn(f"No se pudo guardar la captura: {type(exc).__name__}")
         finally:
